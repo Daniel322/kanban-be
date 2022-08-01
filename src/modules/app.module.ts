@@ -13,7 +13,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { BcryptModule } from '../services/bcrypt/bcrypt.module';
 import { RedisModule } from '../services/redis/redis.module';
 
-import { EnvConfig } from 'src/common/configs';
+import { EnvConfig, SequelizeConfig } from 'src/common/configs';
 import { HttpExceptionFilter } from 'src/common/exceptions';
 
 import { AuthModule } from './auth/auth.module';
@@ -25,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     CacheModule.register(),
     ConfigModule.forRoot(EnvConfig),
     RedisModule,
+    SequelizeModule.forRootAsync(SequelizeConfig),
     ScheduleModule.forRoot(),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
