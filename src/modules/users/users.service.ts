@@ -16,9 +16,18 @@ export class UserService {
 
   // LOGIC METHODS
 
-  async registerUser({ password, ...data }: CreateUserDto) {
-    const passwordHash = await this.bcryptService.hash(password);
-    return this.createUser({ ...data, password: passwordHash });
+  async registerUser(data: CreateUserDto, isSocial = false) {
+    try {
+      if (isSocial) {
+        return this.createUser(data);
+      }
+      const { password } = data;
+      const passwordHash = await this.bcryptService.hash(password);
+      return this.createUser({ ...data, password: passwordHash });
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException(error);
+    }
   }
 
   async verifyUser({ email, password }) {

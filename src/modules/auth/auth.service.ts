@@ -87,12 +87,13 @@ export class AuthService {
     if (!req.user) {
       return 'No user';
     }
+    //TODO add check user before create lul
+    const user = await this.usersService.registerUser(req.user, true);
 
-    //some logic for create user and generate tokens
+    const tokens = await this.generateTokens({ id: user.id });
 
-    //TODO get token from generated pair and remove static url to frontend url from env
     return res.redirect(
-      `http://localhost:3000/success?accessToken=${req.user.accessToken}`,
+      `http://localhost:3000/success?accessToken=${tokens.accessToken}`,
     );
   }
 }
