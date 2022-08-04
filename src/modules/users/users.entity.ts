@@ -5,7 +5,11 @@ import {
   DataType,
   PrimaryKey,
   Scopes,
+  BelongsToMany,
 } from 'sequelize-typescript';
+
+import { ProjectsUsers } from '../projects-users/project-users.entity';
+import { Project } from '../projects/projects.entity';
 
 @Table
 @Scopes(() => ({
@@ -60,4 +64,7 @@ export class User extends Model {
     allowNull: true,
   })
   password: string;
+
+  @BelongsToMany(() => Project, () => ProjectsUsers)
+  projects: Array<Project & { ProjectsUsers: ProjectsUsers }>;
 }

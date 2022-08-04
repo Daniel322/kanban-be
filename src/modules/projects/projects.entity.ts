@@ -6,8 +6,10 @@ import {
   BelongsTo,
   ForeignKey,
   PrimaryKey,
+  BelongsToMany,
   Scopes,
 } from 'sequelize-typescript';
+import { ProjectsUsers } from '../projects-users/project-users.entity';
 
 import { User } from '../users/users.entity';
 
@@ -37,4 +39,7 @@ export class Project extends Model {
     allowNull: false,
   })
   ownerId: string;
+
+  @BelongsToMany(() => User, () => ProjectsUsers)
+  members: Array<User & { ProjectsUsers: ProjectsUsers }>;
 }

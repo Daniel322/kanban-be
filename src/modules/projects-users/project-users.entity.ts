@@ -28,7 +28,7 @@ export class ProjectsUsers extends Model {
     type: DataType.UUID,
     allowNull: false,
   })
-  гыукШв: string;
+  userId: string;
 
   @ForeignKey(() => Project)
   @Column({
