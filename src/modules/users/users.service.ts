@@ -71,7 +71,7 @@ export class UserService {
     );
   }
 
-  async deleteUser(id: string) {
-    return this.usersRepository.destroy({ where: { id } });
+  async deleteUser(id: string, transaction: Transaction = null) {
+    return this.usersRepository.destroy({ where: { id }, transaction });
   }
 }

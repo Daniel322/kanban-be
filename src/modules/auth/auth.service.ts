@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
@@ -21,6 +21,7 @@ export class AuthService {
   private readonly refreshJwtSecret: string;
   private readonly accessJwtTtl: number;
   private readonly refreshJwtTtl: number;
+  private readonly frontendUrl: string;
 
   constructor(
     private readonly configService: ConfigService,
@@ -32,6 +33,7 @@ export class AuthService {
     this.refreshJwtSecret = this.configService.get('jwt.refreshSecret');
     this.accessJwtTtl = this.configService.get('jwt.accessTtl');
     this.refreshJwtTtl = this.configService.get('jwt.refreshTtl');
+    this.frontendUrl = this.configService.get('frontend.url');
   }
 
   async loginUser(data: LoginBody): Promise<Tokens> {
@@ -88,12 +90,25 @@ export class AuthService {
       return 'No user';
     }
     //TODO add check user before create lul
+    const userWithThisEmail = await this.usersService.getCurrentUser({
+      where: { email: req.user.email },
+    });
+    if (userWithThisEmail) {
+      if (userWithThisEmail.password) {
+        throw new BadRequestException('User with this email already created');
+      }
+      const tokens = await this.generateTokens({ id: userWithThisEmail.id });
+
+      return res.redirect(
+        `${this.frontendUrl}/success?accessToken=${tokens.accessToken}`,
+      );
+    }
     const user = await this.usersService.registerUser(req.user, true);
 
     const tokens = await this.generateTokens({ id: user.id });
 
     return res.redirect(
-      `http://localhost:3000/success?accessToken=${tokens.accessToken}`,
+      `${this.frontendUrl}/success?accessToken=${tokens.accessToken}`,
     );
   }
 }

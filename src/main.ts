@@ -26,7 +26,7 @@ async function bootstrap() {
 
   if (process.env.NODE_ENV !== 'production') {
     const config = new DocumentBuilder()
-      .setTitle('Project X API')
+      .setTitle('Kanban Project')
       .setDescription('')
       .setVersion('1.0')
       .build();

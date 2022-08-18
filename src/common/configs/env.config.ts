@@ -5,6 +5,10 @@ const env = registerAs('env', () => ({
   type: process.env.NODE_ENV,
 }));
 
+const frontend = registerAs('frontend', () => ({
+  url: process.env.FRONTEND_URL,
+}));
+
 const database = registerAs('db', () => ({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -62,6 +66,6 @@ export const EnvConfig = {
     JWT_ACCESS_TTL: Joi.number().required(),
     JWT_REFRESH_TTL: Joi.number().required(),
   }),
-  load: [env, database, throttle, redis, salt, jwt],
+  load: [env, database, throttle, redis, salt, jwt, frontend],
   isGlobal: true,
 };
