@@ -17,6 +17,7 @@ import { EnvConfig, SequelizeConfig } from 'src/common/configs';
 import { HttpExceptionFilter } from 'src/common/exceptions';
 
 import { AuthModule } from './auth/auth.module';
+import { ProjectModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     BcryptModule,
     CacheModule.register(),
     ConfigModule.forRoot(EnvConfig),
+    ProjectModule,
     RedisModule,
     SequelizeModule.forRootAsync(SequelizeConfig),
     ScheduleModule.forRoot(),
