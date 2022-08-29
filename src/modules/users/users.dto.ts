@@ -32,6 +32,9 @@ export class CreateUserDto {
   @IsString()
   @Matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    {
+      message: 'Invalid password',
+    },
   )
   @IsOptional()
   password?: string;

@@ -44,6 +44,7 @@ export class AuthService {
   async signupUser(data: RegisterBody): Promise<AuthorisedUser> {
     const user = await this.usersService.registerUser(data);
     const tokens = await this.generateTokens({ id: user.id });
+    console.log(user);
     return { tokens, user };
   }
 

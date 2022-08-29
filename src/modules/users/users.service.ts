@@ -32,6 +32,9 @@ export class UserService {
 
   async verifyUser({ email, password }) {
     const user = await this.getCurrentUser({ where: { email }, raw: true });
+    if (!user) {
+      throw new BadRequestException('User not found!');
+    }
     const isValidPassword = await this.bcryptService.compare(
       password,
       user.password,
@@ -45,7 +48,7 @@ export class UserService {
   // DATABASE LEVEL METHODS
 
   async getCurrentUserForPk(pk: string) {
-    return this.usersRepository.findByPk(pk);
+    return this.usersRepository.scope('current').findByPk(pk);
   }
 
   async getCurrentUser(options: FindOptions) {

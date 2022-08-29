@@ -23,5 +23,5 @@ export interface RefreshBody {
 
 export interface AuthorisedUser {
   tokens: Tokens;
-  user: User;
+  user: Partial<User>;
 }

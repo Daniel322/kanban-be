@@ -8,7 +8,7 @@ import { ProjectsUsers } from './project-users.entity';
 @Injectable()
 export class ProjectUsersService {
   constructor(
-    @Inject('ROJECT-USERS_REPOSITORY')
+    @Inject('PROJECT-USERS_REPOSITORY')
     private readonly projectUsersRepository: typeof ProjectsUsers,
   ) {}
 
