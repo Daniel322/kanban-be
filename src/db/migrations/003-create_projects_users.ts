@@ -7,10 +7,6 @@ module.exports = {
         unique: true,
         primaryKey: true,
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       userId: {
         type: Sequelize.UUID,
         allowNull: false,
@@ -28,6 +24,11 @@ module.exports = {
           key: 'id',
         },
         onDelete: 'CASCADE',
+      },
+      role: {
+        type: Sequelize.ENUM('owner', 'write', 'read'),
+        allowNull: false,
+        defaultValue: 'write',
       },
       createdAt: {
         type: Sequelize.DATE,

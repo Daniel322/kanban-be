@@ -13,9 +13,15 @@ export class ProjectUsersService {
   ) {}
 
   async createProjectUsers(
-    data: readonly Partial<ProjectUserData>[],
+    data: Partial<ProjectUserData>[],
     transaction: Transaction = null,
   ) {
     return this.projectUsersRepository.bulkCreate(data, { transaction });
+    // return Promise.all(
+    //   data.map(
+    //     async (elem) =>
+    //       await this.projectUsersRepository.create(elem, { transaction }),
+    //   ),
+    // );
   }
 }

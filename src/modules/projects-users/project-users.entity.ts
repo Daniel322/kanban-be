@@ -12,6 +12,8 @@ import { Project } from '../projects/projects.entity';
 
 import { User } from '../users/users.entity';
 
+import { ProjectUserRole } from './project-users.types';
+
 @Table
 export class ProjectsUsers extends Model {
   @PrimaryKey
@@ -36,4 +38,11 @@ export class ProjectsUsers extends Model {
     allowNull: false,
   })
   projectId: string;
+
+  @Column({
+    type: DataType.ENUM('owner', 'write', 'read'),
+    allowNull: false,
+    defaultValue: 'write',
+  })
+  role: ProjectUserRole;
 }
